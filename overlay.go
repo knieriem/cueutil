@@ -36,6 +36,9 @@ func (o Overlay) addPath(fsys fs.FS, path string) error {
 		if d.IsDir() {
 			return nil
 		}
+		if d.Type()&fs.ModeSymlink != 0 {
+			return nil
+		}
 		r, err := fsys.Open(path)
 		if err != nil {
 			return err
